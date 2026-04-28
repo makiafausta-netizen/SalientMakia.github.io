@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salient Enoh — Robotics & AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --accent: #00e5a0;
+    --accent2: #7b5cfa;
+    --text: #f0ede8;
+    --muted: #8a8799;
+    --border: rgba(255,255,255,0.07);
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-head);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.4;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    top: 10%; left: -100px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(123,92,250,0.08) 0%, transparent 70%);
+    bottom: 10%; right: -50px;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; max-width: 900px; }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block; width: 30px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.0;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .name-accent { color: var(--accent); }
+
+  .hero-sub {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border: none; border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION COMMONS */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--accent);
+  }
+
+  h2 {
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* ABOUT */
+  #about { background: var(--surface); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-text p span { color: var(--text); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .skill-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+
+  .skill-block-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--bg); }
+
+  .projects-list { display: flex; flex-direction: column; gap: 2rem; }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-card:hover { border-color: rgba(0,229,160,0.3); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-card.purple::before { background: var(--accent2); }
+  .project-card.purple:hover { border-color: rgba(123,92,250,0.3); }
+
+  .project-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .project-title {
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project-role {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .project-card.purple .project-role { color: var(--accent2); }
+
+  .project-desc {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-highlights {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex; align-items: flex-start; gap: 0.6rem;
+  }
+
+  .highlight::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .project-card.purple .highlight::before { color: var(--accent2); }
+
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .tech-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    background: rgba(0,229,160,0.07);
+    border: 1px solid rgba(0,229,160,0.2);
+    border-radius: 2px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .project-card.purple .tech-tag {
+    color: var(--accent2);
+    background: rgba(123,92,250,0.07);
+    border-color: rgba(123,92,250,0.2);
+  }
+
+  .award-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #f5c242;
+    background: rgba(245,194,66,0.08);
+    border: 1px solid rgba(245,194,66,0.2);
+    border-radius: 2px;
+    padding: 0.3rem 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  /* EXPERIENCE */
+  #experience { background: var(--surface); }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta { padding-top: 0.25rem; }
+  .exp-period {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .exp-org {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .exp-title {
+    font-weight: 800;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+
+  .exp-bullets li {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-links {
+    display: flex; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  .contact-link {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-email {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text);
+    margin: 1.5rem 0;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+  .contact-email:hover { color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .edu-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .edu-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.25rem; }
+  .edu-degree {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .edu-honors { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .honor-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent2);
+    background: rgba(123,92,250,0.08);
+    border: 1px solid rgba(123,92,250,0.2);
+    border-radius: 2px;
+    padding: 0.25rem 0.5rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content { animation: fadeUp 0.7s ease both; }
+  .hero-tag { animation: fadeUp 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">SALIENT_ENOH</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Robotics · AI · Autonomous Systems</p>
+    <h1>
+      Salient<br>
+      <span class="name-accent">Enoh</span>
+    </h1>
+    <p class="hero-sub">
+      Robotics & Mechatronics Engineering student at Widener University building real autonomous systems — from underwater vehicles to AI-powered wheelchairs to LLM data platforms.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3.65</div>
+        <div class="stat-label">GPA</div>
+      </div>
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Robotics Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">AI Club Members</div>
+      </div>
+      <div>
+        <div class="stat-num">2027</div>
+        <div class="stat-label">Graduating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <h2>Engineer. Builder.<br>Researcher.</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="edu-block">
+        <div class="edu-title">Widener University</div>
+        <div class="edu-degree">B.S. Robotics, Mechatronics & Automation Engineering · Minor: Computer Science · Expected May 2027</div>
+        <div class="edu-honors">
+          <span class="honor-tag">Presidential Scholarship</span>
+          <span class="honor-tag">PECO Engineering Scholarship</span>
+          <span class="honor-tag">Dean's List</span>
+          <span class="honor-tag">Honors in Engineering</span>
+        </div>
+      </div>
+      <p>I'm a robotics and AI engineer who builds real systems — not demos. From deploying autonomous navigation stacks on an NVIDIA Jetson to designing waterproof AUV enclosures to developing LLM-powered diagnostics pipelines, I work across the full hardware-software stack.</p>
+      <p>I founded and lead the <span>Widener AI Club</span> (40+ members) and was awarded <span>Best Research Presentation</span> for my semi-autonomous wheelchair work.</p>
+      <p>I'm currently seeking internships in robotics, embedded systems, autonomy, and AI/ML engineering.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-block">
+        <div class="skill-block-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">C++</span><span class="tag">Embedded C</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Robotics</div>
+        <div class="skill-tags">
+          <span class="tag">ROS2</span><span class="tag">Sensor Fusion</span><span class="tag">PID</span><span class="tag">State Estimation</span><span class="tag">Kalman Filter</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">AI / ML</div>
+        <div class="skill-tags">
+          <span class="tag">Computer Vision</span><span class="tag">LLMs / RAG</span><span class="tag">FAISS</span><span class="tag">OpenCV</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Hardware</div>
+        <div class="skill-tags">
+          <span class="tag">NVIDIA Jetson</span><span class="tag">Arduino</span><span class="tag">LiDAR</span><span class="tag">IMU</span><span class="tag">Raspberry Pi</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Mechanical</div>
+        <div class="skill-tags">
+          <span class="tag">SolidWorks</span><span class="tag">AutoCAD</span><span class="tag">FEA</span><span class="tag">3D Printing</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Systems</div>
+        <div class="skill-tags">
+          <span class="tag">Linux</span><span class="tag">PySpark</span><span class="tag">FastAPI</span><span class="tag">Git</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Featured Work</div>
+  <h2>Projects</h2>
+  <div class="projects-list">
+
+    <div class="project-card">
+      <div class="award-badge">★ Best Research Presentation — Widener Undergraduate Research Symposium</div>
+      <div class="project-header">
+        <div class="project-title">Semi-Autonomous Electric Wheelchair</div>
+        <div class="project-role">Robotics & Mechatronics Engineer</div>
+      </div>
+      <p class="project-desc">End-to-end autonomy system combining human joystick control with AI-driven navigation and obstacle avoidance. Deployed on NVIDIA Jetson TX2 with real-time sensor fusion and PID motor control for dynamic indoor environments.</p>
+      <div class="project-highlights">
+        <div class="highlight">ROS2 autonomy stack in C++/Python on NVIDIA Jetson TX2 + Arduino for low-level hardware control</div>
+        <div class="highlight">Kalman filter sensor fusion: 2D/3D LiDAR, IMU, ultrasonic — real-time localization and obstacle avoidance</div>
+        <div class="highlight">~75% improvement in system reliability via hardware/software debugging and latency optimization</div>
+        <div class="highlight">Custom mechanical mounts designed in AutoCAD with FEA and rapid prototyping</div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">ROS2</span><span class="tech-tag">C++</span><span class="tech-tag">Python</span>
+        <span class="tech-tag">NVIDIA Jetson</span><span class="tech-tag">LiDAR</span><span class="tech-tag">Kalman Filter</span>
+        <span class="tech-tag">PID Control</span><span class="tech-tag">SolidWorks</span><span class="tech-tag">Linux</span>
+      </div>
+    </div>
+
+    <div class="project-card purple">
+      <div class="project-header">
+        <div class="project-title">Autonomous Underwater Vehicle (AUV)</div>
+        <div class="project-role">Robotics Software Engineer</div>
+      </div>
+      <p class="project-desc">Modular autonomy software for an AUV competing in the international RoboSub competition. Full-stack development from embedded microcontroller integration to high-level mission planning, with custom waterproof mechanical design.</p>
+      <div class="project-highlights">
+        <div class="highlight">ROS2 autonomy modules in C++/Python for navigation, perception, and mission sequencing</div>
+        <div class="highlight">Multi-sensor fusion (IMU, ultrasonic, pressure, RGB camera) for underwater localization</div>
+        <div class="highlight">Fully waterproof enclosure system — sealed tubing, pressure-resistant components via SolidWorks</div>
+        <div class="highlight">Vision-based object detection pipeline (OpenCV) for low-visibility underwater conditions</div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">ROS2</span><span class="tech-tag">C++</span><span class="tech-tag">Python</span>
+        <span class="tech-tag">OpenCV</span><span class="tech-tag">SolidWorks</span><span class="tech-tag">Arduino</span>
+        <span class="tech-tag">MATLAB/Simulink</span><span class="tech-tag">Embedded Systems</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">Scalable Robotics Sensor Data Platform</div>
+        <div class="project-role">AI/ML Platform Engineer</div>
+      </div>
+      <p class="project-desc">End-to-end AI/ML data platform processing real-time robotic sensor data (LiDAR, IMU, encoders) through distributed pipelines, anomaly detection, vector search, and an LLM-powered diagnostics layer.</p>
+      <div class="project-highlights">
+        <div class="highlight">Distributed data pipelines (PySpark/Ray) for real-time ingestion and feature extraction</div>
+        <div class="highlight">Anomaly detection (Isolation Forest) on time-series data to identify system faults</div>
+        <div class="highlight">FAISS vector similarity search to index robot runs and retrieve similar behaviors</div>
+        <div class="highlight">RAG pipeline for automated diagnostics and log summaries; REST API via FastAPI</div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">Python</span><span class="tech-tag">PySpark</span><span class="tech-tag">FAISS</span>
+        <span class="tech-tag">RAG / LLMs</span><span class="tech-tag">FastAPI</span><span class="tech-tag">Isolation Forest</span><span class="tech-tag">Linux</span>
+      </div>
+    </div>
+
+    <div class="project-card purple">
+      <div class="project-header">
+        <div class="project-title">Autonomous Firefighting Robot</div>
+        <div class="project-role">Embedded Robotics Developer</div>
+      </div>
+      <p class="project-desc">Sensor-driven autonomous robot integrating thermal and ultrasonic data for fire detection and obstacle avoidance, with PID-based motor control for precise navigation and full hardware-software integration.</p>
+      <div class="project-highlights">
+        <div class="highlight">Real-time embedded software in C++/Python for sensor processing and motion control</div>
+        <div class="highlight">PID closed-loop motor control with encoder feedback for precise positioning</div>
+        <div class="highlight">Sensor-driven decision logic: thermal + ultrasonic data fusion for fire detection</div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">C++</span><span class="tech-tag">Python</span><span class="tech-tag">Arduino</span>
+        <span class="tech-tag">Raspberry Pi</span><span class="tech-tag">PID Control</span><span class="tech-tag">Embedded Systems</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Background</div>
+  <h2>Experience &<br>Leadership</h2>
+
+  <div class="exp-item">
+    <div class="exp-meta">
+      <div class="exp-period">May–Sep 2024</div>
+      <div class="exp-org">Widener Robotics Lab</div>
+    </div>
+    <div>
+      <div class="exp-title">AI & Machine Learning Researcher</div>
+      <ul class="exp-bullets">
+        <li>Designed multimodal AI chatbot integrating computer vision and speech recognition for real-time human interaction</li>
+        <li>Facial recognition and tracking pipelines (OpenCV) for user identification</li>
+        <li>Speech-to-text and TTS systems optimized for low-latency conversational performance</li>
+        <li>Full system engineered in Python on Linux with modular perception, processing, and inference components</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-meta">
+      <div class="exp-period">Aug–Dec 2025</div>
+      <div class="exp-org">Widener Robotics Lab</div>
+    </div>
+    <div>
+      <div class="exp-title">PLC & Industrial Automation Engineer</div>
+      <ul class="exp-bullets">
+        <li>Designed industrial automation system using Allen-Bradley PLCs and industrial I/O</li>
+        <li>Programmed a 6-DOF UR3 robotic arm for autonomous pick-and-place operations</li>
+        <li>Certified: Universal Robot e-Series Core Track (January 2026)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-meta">
+      <div class="exp-period">2024–Present</div>
+      <div class="exp-org">Widener University</div>
+    </div>
+    <div>
+      <div class="exp-title">Founder & President, Widener AI Club</div>
+      <ul class="exp-bullets">
+        <li>Founded and lead a 40+ member organization focused on AI, robotics, and engineering development</li>
+        <li>Organized workshops on machine learning, robotics systems, and software engineering</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content: center;">Contact</div>
+    <h2>Let's Work<br>Together</h2>
+    <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); max-width: 420px; margin: 0 auto;">
+      I'm actively seeking internships in robotics, embedded systems, autonomy, and AI/ML engineering. Reach out!
+    </p>
+    <a href="mailto:sfmakiankonghoenoh@widener.edu" class="contact-email">sfmakiankonghoenoh@widener.edu</a>
+    <div class="contact-links">
+      <a href="#" class="contact-link">LinkedIn ↗</a>
+      <a href="#" class="contact-link">GitHub ↗</a>
+      <a href="tel:6125138813" class="contact-link">612-513-8813</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Salient Enoh. Chester, PA.</p>
+  <p>Robotics · AI · Autonomy</p>
+</footer>
+
+</body>
+</html>
